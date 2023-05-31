@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/themes/redmond/jquery-ui.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/css/ui.jqgrid.min.css">
+  <link rel="stylesheet" href="/resources/css/style.css">
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
+  <section id="Body">
+    <div class="row">
+      <div class="col-2 px-0">
+        <div class="left">
+          <button type="button" id="stdbtn" class="btn" tableId=1>
+            <span>Students</span>
+          </button>
+          <button type="button" id="crsbtn" class="btn" tableId=2>
+            <span>Courses</span>
+          </button>
+          <button type="button" id="gradbtn" class="btn" tableId=3>
+            <span>Graduates</span>
+          </button>
+          <button type="button" class="btn" tableId=0>
+            <span>Sample</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-10 px-0">
+        <div class="right">
+          <div class="row">
+            <div class="titleBar">
+              <div class="col-10">
+                <div class="titleBox">
+                  <h1>SRS</h1>
+                </div>
+              </div>
+              <div class="col-2">
+                <div class="logoutBox">
+                  <a href="/logout">
+                    <span>logout</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row">
+                <div class="col-9 preset-3">
+                  <div class="toolBar">
+                    <button type="button" id="addstd" class="std" modelId="1" data-bs-toggle="modal"
+                      data-bs-target="#stdModal" data-source=1>
+                      <span>add</span>
+                    </button>
+                    <button type="button" id="editstd" class="std" modelId="2" data-bs-toggle="modal"
+                      data-bs-target="#stdModal" data-source=2>
+                      <span>edit</span>
+                    </button>
+                    <button type="button" id="remstd" class="std" modelId="3" data-source=3>
+                      <span>remove</span>
+                    </button>
+                    <button type="button" id="gradstd" class="std" modelId="4" data-source=4>
+                      <span>graduate</span>
+                    </button>
+                    <button type="button" id="topdf" modelId="1">
+                      <span>PDF</span>
+                    </button>
+                    <button type="button" class="st" modelId="1">
+                      <span>Excel</span>
+                    </button>
+                    <button type="button" class="prt" modelId="1">
+                      <span>print</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-9">
+              <div class="tableContainer">
+                <table id="stdTable"></table>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="infoColumn" hidden>
+                <div class="imageBox">
+                  <img src="/resources/img/studentPhotos/st1.jpg" alt="">
+                </div>
+                <div class="dataBox">
+                  <!-- <span class="infoLine">Sample school</span>
+                  <span class="infoLine">700</span> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    </div>
+
+  </section>
+
+
+  <div class="modal fade" id="stdModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+
+              <div class="titleBox">
+                <h1>Student Registration</h1>
+              </div>
+
+              <div class="infoSection">
+                <h2>Personal information</h2>
+                <div class="infoBox">
+
+                  <div class="col-8 offset-4">
+                    <div id="imageWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Photo</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="file" id="IMAGE" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="nameWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Name</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="NAME" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="surnameWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid surname</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Surname</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="SURNAME" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Course</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <select name="" id="COURSE" class="form-control">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="emailWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid email format</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Email address</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="email" id="EMAIL" class="form-control" placeholder="example@gmail.com">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="mobileWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid number format</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Mobile number</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="MOBILE" class="form-control" placeholder="+994XXXXXXXXX">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="dateWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Date of birth</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="date" id="BIRTH_DATE" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="genderWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Gender</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <div class="genderOption">
+                          <input type="radio" id="male" name="gender" value="1" />
+                          <label for="male">Male</label>
+                        </div>
+                        <div class="genderOption">
+                          <input type="radio" id="female" name="gender" value="2" />
+                          <label for="female">Female</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="infoSection">
+                <h2>Education</h2>
+                <div class="infoBox">
+
+                  <div class="col-8 offset-4">
+                    <div id="schoolWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>School</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="SCHOOL" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="scoreWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Entrance Score</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="ENTRANCE_SCORE" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-8 offset-4">
+                    <div id="cdateWarning" class="warningBox" hidden="hidden">
+                      <span>Invalid name</span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Date completed</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="date" id="COMPLETION_DATE" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="generalWarning" hidden="hidden">
+                <span>Fill all fields properly</span>
+              </div>
+              <div class="buttonLine">
+                <button id="saveStudent" class="saveButton">save student</button>
+                <button id="cancelSt" class="cancel" data-bs-dismiss="modal">cancel</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="crsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+
+              <div class="titleBox">
+                <h1>Course Registration</h1>
+              </div>
+
+              <div class="infoSection">
+                <h2>Course information</h2>
+                <div class="infoBox">
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Course name</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="CRSNAME" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Course code</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <input type="text" id="CRSCODE" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-4">
+                      <span>Lecturer</span>
+                    </div>
+                    <div class="col-8">
+                      <div class="inputBox">
+                        <select name="" id="LECTURER" class="form-control">
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="generalWarning" hidden="hidden">
+              <span>Fill all fields properly</span>
+            </div>
+            <div class="buttonLine">
+              <button id="saveCourse" class="saveButton" data-bs-dismiss="modal">save course</button>
+              <button id="cancelCRS" class="cancel" data-bs-dismiss="modal">cancel</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/jquery.jqgrid.min.js"></script>
+  <script src="fillTable.js"></script>
+  <script src="loadData.js"></script>
+  <script src="toolBar.js"></script>
+  <script src="mask.js"></script>
+  <script src="save.js"></script>
+
+</body>
+<div id="pager"></div>
+
+</html>
