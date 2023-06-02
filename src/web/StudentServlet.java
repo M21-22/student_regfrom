@@ -17,6 +17,7 @@ import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.Arrays;
 
 @WebServlet("/students")
@@ -36,8 +37,6 @@ public class StudentServlet extends HttpServlet {
         int action = Integer.parseInt(convertInputStreamToString(request.getPart("action").getInputStream()));
         String json = convertInputStreamToString(request.getPart("dataLine").getInputStream());
         String imageEncoded = convertInputStreamToString(request.getPart("image").getInputStream());
-        //        int tableId = Integer.parseInt(request.getParameter("tableId"));
-//        String base64Image = request.getParameter("imageData");
 
         ObjectMapper mapper = new ObjectMapper();
 
@@ -46,21 +45,26 @@ public class StudentServlet extends HttpServlet {
 
             StudentInfo st = mapper.readValue(json,StudentInfo.class);
             st.setImage(imageEncoded);
-            int[] err = new StudentValidation(st).checkValid();
-            response.setContentType("application/json");
-            boolean value;
+            if(action==1 || action==2){
+                int[] err = new StudentValidation(st).checkValid();
+                response.setContentType("application/json");
+                boolean passValue;
+                if(!Arrays.stream(err).anyMatch(x -> x==1)){
+                    new StudentDao(action, st);
+                    passValue = true;
+                } else {
+                    passValue = false;
+                }
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("err",err);
+                jsonObj.put("pass",passValue);
 
-            if(!Arrays.stream(err).anyMatch(x -> x==1)){
+                PrintWriter pw = response.getWriter();
+                pw.print(jsonObj);
+                pw.close();
+            } else if (action==3 || action==4){
                 new StudentDao(action, st);
-                value = true;
-            } else{
-                value = false;
             }
-            System.out.println(value);
-            JSONObject jsonObj = new JSONObject();
-            jsonObj.put("err",err);
-            jsonObj.put("pass",value);
-            response.getWriter().print(jsonObj);
         } catch (Exception e){
             logger.info(e);
         }
@@ -69,6 +73,7 @@ public class StudentServlet extends HttpServlet {
     private String convertInputStreamToString(InputStream inputStream) throws IOException {
         byte[] bytes = new byte[inputStream.available()];
         inputStream.read(bytes);
+        inputStream.close();
         return new String(bytes, "UTF-8");
     }
 }

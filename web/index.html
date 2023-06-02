@@ -53,18 +53,18 @@
               <div class="row">
                 <div class="col-9 preset-3">
                   <div class="toolBar">
-                    <button type="button" id="addstd" class="std" modelId="1" data-bs-toggle="modal"
+                    <button type="button" id="actionAdd" class="act" modelId="1" data-bs-toggle="modal"
                       data-bs-target="#stdModal" data-source=1>
                       <span>add</span>
                     </button>
-                    <button type="button" id="editstd" class="std" modelId="2" data-bs-toggle="modal"
+                    <button type="button" id="actionEdit" class="act" modelId="2" data-bs-toggle="modal"
                       data-bs-target="#stdModal" data-source=2>
                       <span>edit</span>
                     </button>
-                    <button type="button" id="remstd" class="std" modelId="3" data-source=3>
+                    <button type="button" id="actionRemove" class="act" modelId="3" data-source=3>
                       <span>remove</span>
                     </button>
-                    <button type="button" id="gradstd" class="std" modelId="4" data-source=4>
+                    <button type="button" id="actionGraduate" class="act" modelId="4" data-source=4>
                       <span>graduate</span>
                     </button>
                     <button type="button" id="topdf" modelId="1">
@@ -223,7 +223,7 @@
 
                   <div class="col-8 offset-4">
                     <div id="dateWarning" class="warningBox" hidden="hidden">
-                      <span>Invalid name</span>
+                      <span>Invalid date</span>
                     </div>
                   </div>
                   
@@ -297,7 +297,7 @@
                     </div>
                     <div class="col-8">
                       <div class="inputBox">
-                        <input type="text" id="ENTRANCE_SCORE" class="form-control">
+                        <input type="number" id="ENTRANCE_SCORE" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -409,7 +409,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/free-jqgrid/4.13.5/js/jquery.jqgrid.min.js"></script>
   <script src="fillTable.js"></script>
+  <script src="globalVars.js"></script>
   <script src="loadData.js"></script>
+  <script src="getCombos.js"></script>
+  <script src="DBRequests.js"></script>
   <script src="toolBar.js"></script>
   <script src="mask.js"></script>
   <script src="save.js"></script>

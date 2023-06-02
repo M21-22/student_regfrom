@@ -22,8 +22,9 @@ var params1 = {
 var params2 = {
     'url': "/data",
     'caption': "Course List",
-    'colNames': ["Course name", "Course code", "Lecturer", "Students"],
+    'colNames': ["ID","Course name", "Course code", "Lecturer", "Students"],
     'colModel': [
+        { name:"ID", index: "ID", hidden:true},
         { name: "CRSNAME", index: "CRSNAME", width: "100px" },
         { name: "CRSCODE", index: "CRSCODE", width: "60px" },
         { name: "LECTURER", index: "LECTURER", width: "100px" },
@@ -34,21 +35,23 @@ var params2 = {
 
 $('.btn').on("click", async function () {
 
-    var tableId = $(this).attr('tableId')
-
+    tableId = $(this).attr('tableId')
     $("#stdTable").jqGrid('GridUnload')
 
     if (tableId == 1) {
+        $('.act').attr('data-bs-target', '#stdModal')
         await new Promise(function (resolve) {
             resolve(fillTable(params1))
         })
     }
     if (tableId == 2) {
+        $('.act').attr('data-bs-target', '#crsModal')
         await new Promise(function (resolve) {
             resolve(fillTable(params2))
         })
     }
     if (tableId == 3) {
+        $('.act').attr('data-bs-target', '#stdModal')
         await new Promise(function (resolve) {
             let params3 = {...params1}
             params3.caption = 'Graduate List'
@@ -58,21 +61,11 @@ $('.btn').on("click", async function () {
     } 
 })
 
-$('#stdbtn').on('click', function () {
-    $('.std').attr('data-bs-target', '#stdModal')
-})
-
-$('#crsbtn').on('click', function () {
-    $('.std').attr('data-bs-target', '#crsModal')
-})
-
 $(document).on('click', '#stdTable', function () {
     var rowId = $("#stdTable").jqGrid('getGridParam', 'selrow');
     var rowData = $("#stdTable").jqGrid('getRowData', rowId);
-    var title = $('.ui-jqgrid-title').text()
-
-    if (rowId == null || title != "Student List") {
-    //     if (rowId == null || sourceButton!=1 || sourceButton!=3) {
+    // var title = $('.ui-jqgrid-title').text()
+    if (rowId == null || tableId==2 ) {
         $('.infoColumn')[0].setAttribute('hidden', "hidden")
     } else {
         var decodedImage = atob(rowData.IMAGE.split(',')[1])

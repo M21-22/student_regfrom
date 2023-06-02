@@ -1,12 +1,11 @@
-var imageEncoded
+
 $('#IMAGE')[0].addEventListener("change",(event)=>{
-    const selectedfile = event.target.files;
-    if (selectedfile.length > 0) {
-        const [imageFile] = selectedfile;
+    const selectedFile = event.target.files;
+    if (selectedFile.length > 0) {
+        const [imageFile] = selectedFile;
         const fileReader = new FileReader();
         fileReader.onload = () => {
             const srcData = fileReader.result;
-            // console.log('base64:', srcData)
             imageEncoded = srcData;
         };
         fileReader.readAsDataURL(imageFile);
@@ -15,17 +14,11 @@ $('#IMAGE')[0].addEventListener("change",(event)=>{
 
 $('.saveButton').on('click', function () {
 
-    var rowId = $("#stdTable").jqGrid('getGridParam', 'selrow');
-    var rowData = $("#stdTable").jqGrid('getRowData', rowId);
-
     var modalType = $(this).closest('.modal')[0].id;
-    var tableId = null
-    if(modalType == 'stdModal') tableId = 1
-    if(modalType == 'crsModal') tableId = 2
     var dataLine
     if (modalType == 'stdModal') {
         dataLine = {
-            "ID":rowData.ID,
+            "ID":dataId,
             "NAME": $('#NAME').val(),
             "SURNAME": $('#SURNAME').val(),
             "COURSE": $('#COURSE').val(),
@@ -38,37 +31,20 @@ $('.saveButton').on('click', function () {
             "COMPLETION_DATE": $('#COMPLETION_DATE').val(),
             // "IMAGE": document.getElementById('IMAGE').files[0],
         }
-        var fileInput = $('#IMAGE')[0].files[0];
-        var reader = new FileReader();
-
-        // reader.onload = function (event) {
-        //     const base64Image = event.target.result;
-        //     var imageData = {'base64Image': base64Image}
-
-        // }
-        // reader.readAsDataURL(fileInput);
-        studentCall(tableId, dataLine, sourceButton, imageEncoded)
-
-        setTimeout(function () {
-            $("#stdTable").jqGrid('GridUnload')
-            fillTable(params1)
-        }, 500)
+        studentRequest( dataLine, actionButton, imageEncoded)
     }
     if (modalType == 'crsModal') {
         dataLine = {
-            "ID":rowData.ID,
+            "ID":dataId,
             "CRSNAME": $('#CRSNAME').val(),
             "CRSCODE": $('#CRSCODE').val(),
             "LECTURER": $('#LECTURER').val(),
         }
-        courseCall(tableId, dataLine,sourceButton)
-        setTimeout(function () {
-            $("#stdTable").jqGrid('GridUnload')
-            fillTable(params2)
-        }, 500)
-        // getLecturers()
-        // getCourses()
+        courseRequest(dataLine, actionButton)
     }
+    setTimeout(function () {
+        $('.btn.selected').trigger('click')
+    }, 500)
 })
 
 $('.modal').on("hidden.bs.modal", function() {
@@ -81,7 +57,6 @@ $('.modal').on("hidden.bs.modal", function() {
                 $('.infoBox #' + value.id).val('')
             }
         })
-
         let selOpt = document.querySelector('.infoBox option[selected="selected"]')
         if(selOpt!=null) selOpt.removeAttribute('selected')
 });

@@ -21,9 +21,13 @@ import java.io.IOException;
 public class CourseServlet extends HttpServlet {
     private Log logger = LogFactory.getLog(getClass());
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int tableId = Integer.parseInt(request.getParameter("tableId"));
+        processRequest(request, response);
+    }
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
         String json = request.getParameter("dataLine");
         int action = Integer.parseInt(request.getParameter("action"));
         ObjectMapper mapper = new ObjectMapper();
@@ -31,10 +35,6 @@ public class CourseServlet extends HttpServlet {
             HttpSession session = request.getSession(true);
             CourseInfo crs = mapper.readValue(json,CourseInfo.class);
             new CourseDao(action, crs);
-
-//            JSONObject jsonObj = new JSONObject();
-//            jsonObj.put("pass",true);
-//            response.getWriter().print(jsonObj);
 
         } catch (Exception e){
             logger.info(e);

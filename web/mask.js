@@ -33,3 +33,21 @@ document.getElementById('SURNAME').addEventListener('input', function (e) {
         $('#surnameWarning').removeAttr('hidden')
     }
 });
+
+document.getElementById('BIRTH_DATE').addEventListener('input', function (e) {
+    var isValid = /\b\d{4}-\d{2}-\d{2}\b/.test($('#BIRTH_DATE').val())
+    if(isValid){
+        $('#dateWarning').attr('hidden', 'hidden')
+    } else {
+        $('#dateWarning').removeAttr('hidden')
+    }
+});
+
+document.getElementById('COMPLETION_DATE').addEventListener('input', function (e) {
+    var isValid = /\b\d{4}-\d{2}-\d{2}\b/.test($('#COMPLETION_DATE').val())
+    if(isValid){
+        $('#cdateWarning').attr('hidden', 'hidden')
+    } else {
+        $('#cdateWarning').removeAttr('hidden')
+    }
+});

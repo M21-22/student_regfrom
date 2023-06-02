@@ -7,7 +7,6 @@ import utils.DBFunction;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
 public class StudentDao implements ObjectDao<StudentInfo> {
@@ -32,19 +31,19 @@ public class StudentDao implements ObjectDao<StudentInfo> {
                     if(action == 1){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.AddStudent(?,?,?,?,?,?,?,?,?,?,?)}";
                         cs = conn.prepareCall(sql);
-                        addOrEditData(studentInfo, conn , cs, sql);
+                        addOrEditData(studentInfo , cs);
                     }else if(action == 2){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.EditStudent(?,?,?,?,?,?,?,?,?,?,?,?)}";
                         cs = conn.prepareCall(sql);
-                        addOrEditData(studentInfo, conn , cs, sql);
+                        addOrEditData(studentInfo, cs);
                     } else if(action == 3){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.RemoveStudent(?)}";
                         cs = conn.prepareCall(sql);
-                        removeData(studentInfo, conn , cs, sql);
-                    } else if(action==4){
+                        removeData(studentInfo , cs);
+                    } else if(action == 4){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.GraduateStudent(?)}";
                         cs = conn.prepareCall(sql);
-                        makeGraduate(studentInfo, conn , cs, sql);
+                        makeGraduate(studentInfo, cs);
                     }
                 }
                 catch (Exception ex) {
@@ -62,7 +61,8 @@ public class StudentDao implements ObjectDao<StudentInfo> {
         }
     }
     @Override
-    public void addOrEditData(StudentInfo st,Connection conn ,CallableStatement cs, String sql) throws Exception {
+    public void addOrEditData(StudentInfo st, CallableStatement cs) throws Exception {
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(action!=1) cs.setLong("P_ID" ,st.getId());
         cs.setString("P_ST_NAME",st.getName());
@@ -79,12 +79,12 @@ public class StudentDao implements ObjectDao<StudentInfo> {
         cs.execute();
     }
     @Override
-    public void removeData(StudentInfo st,Connection conn ,CallableStatement cs, String sql) throws Exception {
+    public void removeData(StudentInfo st, CallableStatement cs) throws Exception {
         cs.setLong("P_ID", st.getId());
         cs.execute();
     }
 
-    public void makeGraduate(StudentInfo st,Connection conn ,CallableStatement cs, String sql) throws Exception {
+    public void makeGraduate(StudentInfo st, CallableStatement cs) throws Exception {
         cs.setLong("P_ID", st.getId());
         cs.execute();
     }

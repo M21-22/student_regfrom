@@ -7,7 +7,6 @@ import utils.DBFunction;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.text.SimpleDateFormat;
 
 public class CourseDao implements ObjectDao<CourseInfo> {
     private int action;
@@ -33,15 +32,15 @@ public class CourseDao implements ObjectDao<CourseInfo> {
                     if(action == 1){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.AddCourse(?,?,?)}";
                         cs = conn.prepareCall(sql);
-                        addOrEditData(courseInfo, conn , cs, sql);
+                        addOrEditData(courseInfo, cs);
                     }else if(action == 2){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.EditCourse(?,?,?,?)}";
                         cs = conn.prepareCall(sql);
-                        addOrEditData(courseInfo, conn , cs, sql);
+                        addOrEditData(courseInfo, cs);
                     } else if(action == 3){
                         sql = "{call NIS_PROJECT.ST_PACKAGE.RemoveCourse(?)}";
                         cs = conn.prepareCall(sql);
-                        removeData(courseInfo, conn , cs, sql);
+                        removeData(courseInfo, cs);
                     }
                 }
                 catch (Exception ex) {
@@ -59,9 +58,7 @@ public class CourseDao implements ObjectDao<CourseInfo> {
         }
     }
     @Override
-    public void addOrEditData(CourseInfo crs, Connection conn, CallableStatement cs, String sql) throws Exception {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println(action);
+    public void addOrEditData(CourseInfo crs, CallableStatement cs) throws Exception {
         if(action!=1) cs.setLong("P_ID" ,crs.getId());
         cs.setString("P_COURSE_NAME", crs.getCrsname());
         cs.setString("P_COURSE_CODE", crs.getCrscode());
@@ -69,7 +66,7 @@ public class CourseDao implements ObjectDao<CourseInfo> {
         cs.execute();
     }
     @Override
-    public void removeData(CourseInfo crs, Connection conn, CallableStatement cs, String sql) throws Exception {
+    public void removeData(CourseInfo crs, CallableStatement cs) throws Exception {
         cs.setLong("P_ID", crs.getId());
         cs.execute();
     }

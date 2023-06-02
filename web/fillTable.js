@@ -27,12 +27,12 @@ function fillTable(params) {
             onSelectRow: onRowSelect,
             beforeSelectRow: onRowUnselect,
             caption: params.caption,
-            postData: {
-                'tableId': params.tableId
-            },
+            // postData: {
+            //     'tableId': params.tableId
+            // },
             ajaxGridOptions: {
                 beforeSend: function(xhr) {
-                    xhr.setRequestHeader('tableId', params.tableId);
+                    xhr.setRequestHeader('tableId', tableId);
                 }
             }
 

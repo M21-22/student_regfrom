@@ -13,7 +13,7 @@ public interface ObjectDao<T extends ObjectInfo> {
 
     public void performAction() throws Exception;
 
-    public void addOrEditData(T obj, Connection conn , CallableStatement cs, String sql) throws Exception;
+    public void addOrEditData(T obj, CallableStatement cs) throws Exception;
 
-    public void removeData(T obj, Connection conn , CallableStatement cs, String sql) throws Exception;
+    public void removeData(T obj, CallableStatement cs) throws Exception;
 }

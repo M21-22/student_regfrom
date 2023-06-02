@@ -2,7 +2,9 @@ package domain;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class StudentInfo implements ObjectInfo{
+import java.io.Serializable;
+
+public class StudentInfo implements ObjectInfo, Serializable {
     @JsonProperty("ID")
     private long id;
     @JsonProperty("NAME")
